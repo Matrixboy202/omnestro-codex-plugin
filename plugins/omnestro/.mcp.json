@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "omnestro": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/launcher.mjs",
+        "codex"
+      ]
+    }
+  }
+}

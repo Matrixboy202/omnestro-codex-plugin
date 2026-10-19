@@ -1,0 +1,20 @@
+{
+  "name": "omnestro",
+  "interface": {
+    "displayName": "OMNESTRO"
+  },
+  "plugins": [
+    {
+      "name": "omnestro",
+      "source": {
+        "source": "local",
+        "path": "./plugins/omnestro"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

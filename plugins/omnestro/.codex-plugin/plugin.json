@@ -1,0 +1,42 @@
+{
+  "name": "omnestro",
+  "version": "0.2.0",
+  "description": "Conduct local native coding agents around one mission, with independent review and recorded verification evidence.",
+  "author": {
+    "name": "OMNESTRO",
+    "url": "https://omnestro.matrixboy.net"
+  },
+  "homepage": "https://omnestro.matrixboy.net",
+  "repository": "https://github.com/Matrixboy202/omnestro-codex-plugin",
+  "license": "MIT",
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "requires_local_executor": true,
+  "interface": {
+    "displayName": "OMNESTRO",
+    "shortDescription": "Local multi-agent missions",
+    "longDescription": "OMNESTRO conducts your own Codex and Claude Code on one software-engineering mission, in an isolated copy of your project, with independent review, tests and recorded evidence. Nothing reaches your project until you approve the plan and apply the result in the OMNESTRO desktop app. Requires the OMNESTRO desktop app and an OMNESTRO account (free trial, then a subscription).",
+    "developerName": "OMNESTRO",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Runs a mission with your own Codex and Claude Code subscriptions",
+      "One builder, builder plus independent review, or two competing candidates",
+      "Every mission works in an isolated copy of the project",
+      "Recorded tests, reviews and verification evidence",
+      "Nothing reaches your project until you approve and apply it in OMNESTRO"
+    ],
+    "websiteURL": "https://omnestro.matrixboy.net",
+    "supportURL": "https://omnestro.matrixboy.net/support/",
+    "privacyPolicyURL": "https://omnestro.matrixboy.net/privacy/",
+    "termsOfServiceURL": "https://omnestro.matrixboy.net/terms/",
+    "defaultPrompt": [
+      "Is OMNESTRO connected to this project?",
+      "Run this through OMNESTRO: add input validation to the signup form, with Claude reviewing.",
+      "Show the status and evidence of my latest OMNESTRO mission."
+    ],
+    "brandColor": "#006B63",
+    "brandColorDark": "#00E0C2",
+    "composerIcon": "./assets/logo.png",
+    "logo": "./assets/logo.png"
+  }
+}

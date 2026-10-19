@@ -1,0 +1,117 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "omnestro",
+  "version": "0.2.0",
+  "description": "Conduct local native coding agents around one mission, with independent review and recorded verification evidence.",
+  "author": {
+    "name": "OMNESTRO",
+    "url": "https://omnestro.matrixboy.net"
+  },
+  "homepage": "https://omnestro.matrixboy.net",
+  "repository": "https://github.com/Matrixboy202/omnestro-codex-plugin",
+  "license": "MIT",
+  "keywords": [
+    "multi-agent",
+    "code-review",
+    "claude-code",
+    "orchestration",
+    "verification"
+  ],
+  "extensions": {
+    "com.openai": {
+      "requires_local_executor": true,
+      "interface": {
+        "displayName": "OMNESTRO",
+        "shortDescription": "Local multi-agent missions",
+        "longDescription": "OMNESTRO conducts your own Codex and Claude Code on one software-engineering mission, in an isolated copy of your project, with independent review, tests and recorded evidence. Nothing reaches your project until you approve the plan and apply the result in the OMNESTRO desktop app. Requires the OMNESTRO desktop app and an OMNESTRO account (free trial, then a subscription).",
+        "developerName": "OMNESTRO",
+        "category": "Developer Tools",
+        "capabilities": [
+          "Runs a mission with your own Codex and Claude Code subscriptions",
+          "One builder, builder plus independent review, or two competing candidates",
+          "Every mission works in an isolated copy of the project",
+          "Recorded tests, reviews and verification evidence",
+          "Nothing reaches your project until you approve and apply it in OMNESTRO"
+        ],
+        "websiteURL": "https://omnestro.matrixboy.net",
+        "supportURL": "https://omnestro.matrixboy.net/support/",
+        "privacyPolicyURL": "https://omnestro.matrixboy.net/privacy/",
+        "termsOfServiceURL": "https://omnestro.matrixboy.net/terms/",
+        "defaultPrompt": [
+          "Is OMNESTRO connected to this project?",
+          "Run this through OMNESTRO: add input validation to the signup form, with Claude reviewing.",
+          "Show the status and evidence of my latest OMNESTRO mission."
+        ],
+        "brandColor": "#006B63",
+        "brandColorDark": "#00E0C2",
+        "composerIcon": "./assets/logo.png",
+        "logo": "./assets/logo.png"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Setup check",
+              "prompt": "Is OMNESTRO connected to this project?",
+              "tools_triggered": [
+                "omnestro_connection_status"
+              ],
+              "expected_behavior": "Reports the connection state. If setup is missing, lists the next steps in order: install the app, sign in under Account and subscription, connect the project. Does not change anything."
+            },
+            {
+              "description": "Request a reviewed mission",
+              "prompt": "Run this through OMNESTRO: add input validation to the signup form, with Claude reviewing the change.",
+              "tools_triggered": [
+                "omnestro_connection_status",
+                "omnestro_project_info",
+                "omnestro_capabilities",
+                "omnestro_mission_create"
+              ],
+              "expected_behavior": "Chooses PAIR mode, requests the mission with a fresh requestId and tells the user to approve the exact request and the plan inside the OMNESTRO app. Never approves anything itself."
+            },
+            {
+              "description": "Mission status",
+              "prompt": "What is the status of my latest OMNESTRO mission?",
+              "tools_triggered": [
+                "omnestro_missions_list",
+                "omnestro_mission_status"
+              ],
+              "expected_behavior": "Lists recent missions in the connected project and reports the latest one with its status and phase."
+            },
+            {
+              "description": "Recorded evidence",
+              "prompt": "Show the tests and reviews OMNESTRO recorded for my latest mission.",
+              "tools_triggered": [
+                "omnestro_missions_list",
+                "omnestro_evidence_get"
+              ],
+              "expected_behavior": "Summarizes recorded verification and review results and states that this is recorded evidence, not a new test run."
+            },
+            {
+              "description": "Trial and plan facts",
+              "prompt": "How long is the OMNESTRO free trial and what does it cost?",
+              "tools_triggered": [
+                "omnestro_connection_status"
+              ],
+              "expected_behavior": "Answers only from the offer field: the trial length, plan names and prices. If a price is null, says it is not published yet. Never invents numbers."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Unrelated general question",
+              "prompt": "What is the capital of Japan?"
+            },
+            {
+              "description": "Small explanation that needs no agents",
+              "prompt": "Explain what a Python list comprehension is."
+            },
+            {
+              "description": "Creative writing",
+              "prompt": "Write a short poem about the sea."
+            }
+          ]
+        }
+      }
+    }
+  }
+}
