@@ -7,11 +7,11 @@ import readline from 'node:readline';
 const client=process.argv[2];
 if(!['codex','claude'].includes(client))throw Error('INVALID_CLIENT');
 const file=process.env.OMNESTRO_MCP_CONFIG||path.join(os.homedir(),'.omnestro','extensions',client+'.json');
-const setupTool={name:'omnestro_connection_status',title:'OMNESTRO setup and connection status',description:'Check OMNESTRO setup: desktop app, account, project connection and engine. Returns the next setup step for the user and, once connected, the account state and the free-trial and plan facts. Works before setup. Never grants access or reads owner credentials.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{title:'OMNESTRO setup and connection status',readOnlyHint:true,destructiveHint:false,idempotentHint:true,openWorldHint:false}};
+const setupTool={name:'omnestro_connection_status',title:'OMNESTRO setup and connection status',description:'Check OMNESTRO setup: desktop app, account, project connection and engine. Returns the next setup step for the user and, once connected, the account, trial and plan status. Works before setup. Never grants access or reads owner credentials.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{title:'OMNESTRO setup and connection status',readOnlyHint:true,destructiveHint:false,idempotentHint:true,openWorldHint:false}};
 // Setup order matters: the account comes before the connection, and installing or updating the plugin never renews a pairing.
 const card=client==='codex'?'Codex':'Claude Code';
-const next=`The user sets up OMNESTRO; never do these steps for them. 1) Install the OMNESTRO desktop app; if it is not installed yet, the user requests early access at https://omnestro.matrixboy.net. 2) In OMNESTRO > "الحساب والاشتراك" (Account and subscription), create an account or sign in; the first sign-in on a device starts the free trial, and a subscription is required after it. 3) In "الربط والإضافات" (Connect Codex and Claude) > the ${card} card, choose the project and press "ربط / تغيير المشروع" (connect / change project). Installing or updating the plugin does not renew an expired connection. Never ask an agent to read owner credentials or run approval/setup commands.`;
-const accountNext='Connected, but the OMNESTRO account is not ready. Ask the user to open OMNESTRO > "الحساب والاشتراك" (Account and subscription) and create an account or sign in (the first sign-in on a device starts the free trial), or subscribe there when the trial or subscription has ended. Then check omnestro_connection_status again.';
+const next=`The user sets up OMNESTRO; never do these steps for them. 1) Install the OMNESTRO desktop app; if it is not installed yet, the user requests early access at https://omnestro.matrixboy.net. 2) In OMNESTRO > "الحساب والاشتراك" (Account and subscription), create an account or sign in; the app shows the trial and subscription status. 3) In "الربط والإضافات" (Connect Codex and Claude) > the ${card} card, choose the project and press "ربط / تغيير المشروع" (connect / change project). Installing or updating the plugin does not renew an expired connection. Never ask an agent to read owner credentials or run approval/setup commands.`;
+const accountNext='Connected, but the OMNESTRO account is not ready. Ask the user to open OMNESTRO > "الحساب والاشتراك" (Account and subscription) and create an account or sign in, or renew the subscription there if it has ended. Then check omnestro_connection_status again.';
 let lastSignature='';
 function connection(){
   if(!fs.existsSync(file))return {state:'NOT_PAIRED',next};
@@ -35,7 +35,7 @@ async function status(){
   catch(error){return {client,state:error.message==='PAIRING_REJECTED'?'REVOKED_OR_EXPIRED':'ENGINE_UNAVAILABLE',next};}
 }
 const VERSIONS=['2025-11-25','2025-06-18','2025-03-26','2024-11-05'];
-const instructions='Use omnestro_connection_status first and relay its next step to the user. Installing OMNESTRO, signing in, the free trial and subscriptions are user actions inside the OMNESTRO app; state trial and price facts only from the offer field of that tool, never from memory. OMNESTRO runs locally on the owner-paired project with the owner subscription CLIs. Missing setup is a user action in the OMNESTRO app, never permission to read owner credentials. Exact mutation approvals, plan approval and Apply stay with the owner. Evidence is recorded, not a newly executed test. Never recursively create a mission from inside a running OMNESTRO mission.';
+const instructions='Use omnestro_connection_status first and relay its next step to the user. Installing OMNESTRO, signing in and subscriptions are user actions inside the OMNESTRO app. Mention trial or price facts only when the user asks, and only from the offer field of that tool, never from memory. OMNESTRO runs locally on the owner-paired project with the owner subscription CLIs. Missing setup is a user action in the OMNESTRO app, never permission to read owner credentials. Exact mutation approvals, plan approval and Apply stay with the owner. Evidence is recorded, not a newly executed test. Never recursively create a mission from inside a running OMNESTRO mission.';
 const failed={content:[{type:'text',text:'OMNESTRO_REQUEST_FAILED: check omnestro_connection_status, then review connection or permissions in OMNESTRO. Do not change credentials or bypass approvals.'}],isError:true};
 async function listTools(){
   const c=connection();if(!c.config)return [setupTool];
@@ -50,7 +50,7 @@ async function callTool({name,arguments:args}={}){
   }catch{return failed;}
 }
 async function handle(m){
-  if(m.method==='initialize'){const v=VERSIONS.includes(m.params?.protocolVersion)?m.params.protocolVersion:VERSIONS[0];return {protocolVersion:v,capabilities:{tools:{listChanged:true}},serverInfo:{name:'omnestro',title:'OMNESTRO',version:'0.2.0'},instructions};}
+  if(m.method==='initialize'){const v=VERSIONS.includes(m.params?.protocolVersion)?m.params.protocolVersion:VERSIONS[0];return {protocolVersion:v,capabilities:{tools:{listChanged:true}},serverInfo:{name:'omnestro',title:'OMNESTRO',version:'0.2.1'},instructions};}
   if(m.method==='ping')return {};
   if(m.method==='tools/list')return {tools:await listTools()};
   if(m.method==='tools/call')return callTool(m.params);

@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "omnestro",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Conduct local native coding agents around one mission, with independent review and recorded verification evidence.",
   "author": {
     "name": "OMNESTRO",
@@ -23,7 +23,7 @@
       "interface": {
         "displayName": "OMNESTRO",
         "shortDescription": "Local multi-agent missions",
-        "longDescription": "OMNESTRO conducts your own Codex and Claude Code on one software-engineering mission, in an isolated copy of your project, with independent review, tests and recorded evidence. Nothing reaches your project until you approve the plan and apply the result in the OMNESTRO desktop app. Requires the OMNESTRO desktop app and an OMNESTRO account (free trial, then a subscription).",
+        "longDescription": "OMNESTRO conducts your own Codex and Claude Code on one software-engineering mission, in an isolated copy of your project, with independent review, tests and recorded evidence. Nothing reaches your project until you approve the plan and apply the result in the OMNESTRO desktop app. Requires the OMNESTRO desktop app and an OMNESTRO account.",
         "developerName": "OMNESTRO",
         "category": "Developer Tools",
         "capabilities": [
@@ -88,12 +88,13 @@
               "expected_behavior": "Summarizes recorded verification and review results and states that this is recorded evidence, not a new test run."
             },
             {
-              "description": "Trial and plan facts",
-              "prompt": "How long is the OMNESTRO free trial and what does it cost?",
+              "description": "Proposed plan",
+              "prompt": "Show me the plan OMNESTRO proposed for my latest mission.",
               "tools_triggered": [
-                "omnestro_connection_status"
+                "omnestro_missions_list",
+                "omnestro_mission_plan"
               ],
-              "expected_behavior": "Answers only from the offer field: the trial length, plan names and prices. If a price is null, says it is not published yet. Never invents numbers."
+              "expected_behavior": "Summarizes the recorded plan steps, risks and tests and any open questions, and says that plan approval and answers happen only in the OMNESTRO app."
             }
           ],
           "negative": [

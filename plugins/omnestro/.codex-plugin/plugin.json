@@ -1,6 +1,6 @@
 {
   "name": "omnestro",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Conduct local native coding agents around one mission, with independent review and recorded verification evidence.",
   "author": {
     "name": "OMNESTRO",
@@ -15,7 +15,7 @@
   "interface": {
     "displayName": "OMNESTRO",
     "shortDescription": "Local multi-agent missions",
-    "longDescription": "OMNESTRO conducts your own Codex and Claude Code on one software-engineering mission, in an isolated copy of your project, with independent review, tests and recorded evidence. Nothing reaches your project until you approve the plan and apply the result in the OMNESTRO desktop app. Requires the OMNESTRO desktop app and an OMNESTRO account (free trial, then a subscription).",
+    "longDescription": "OMNESTRO conducts your own Codex and Claude Code on one software-engineering mission, in an isolated copy of your project, with independent review, tests and recorded evidence. Nothing reaches your project until you approve the plan and apply the result in the OMNESTRO desktop app. Requires the OMNESTRO desktop app and an OMNESTRO account.",
     "developerName": "OMNESTRO",
     "category": "Developer Tools",
     "capabilities": [

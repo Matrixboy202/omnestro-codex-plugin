@@ -7,7 +7,7 @@ This plugin connects Codex to the OMNESTRO desktop app on your computer. It does
 ## Requirements
 
 - The OMNESTRO desktop app. Windows is in early access by invitation until the Microsoft Store release, and Linux has a public beta. See https://omnestro.matrixboy.net/download/.
-- An OMNESTRO account. The first sign-in on a device starts a free trial; after the trial a subscription is required. The app shows the current trial length and prices.
+- An OMNESTRO account. The app shows your account and subscription status.
 - Codex signed in with your own ChatGPT plan. Claude Code with your Claude subscription is optional and enables two-agent missions.
 - Node.js 18 or later on your PATH.
 
@@ -33,7 +33,7 @@ This plugin connects Codex to the OMNESTRO desktop app on your computer. It does
 
 ## Tools
 
-`omnestro_connection_status` reports the setup step you still need, your account state and the free-trial and plan facts. Once connected: read the project, modes, missions, plans, activity and evidence, and request a new mission, a follow-up, the next stage, a resume or a cancellation. Every request that changes anything waits for your approval in the OMNESTRO app. Plan approval, answers to questions and Apply happen only in the app.
+`omnestro_connection_status` reports the setup step you still need, your account state, and trial and plan status when you ask. Once connected: read the project, modes, missions, plans, activity and evidence, and request a new mission, a follow-up, the next stage, a resume or a cancellation. Every request that changes anything waits for your approval in the OMNESTRO app. Plan approval, answers to questions and Apply happen only in the app.
 
 ## Troubleshooting
 
